@@ -5,7 +5,6 @@ import (
 	"code.google.com/p/bencode-go"
 	"crypto/sha1"
 	"fmt"
-	"log"
 	"os"
 	"path/filepath"
 	"time"
@@ -48,14 +47,12 @@ type MetaInfo struct {
 func (metaInfo *MetaInfo) ReadTorrentMetaInfoFile(fileNameWithPath string) bool {
 	// Check exntension.
 	if fileExt := filepath.Ext(fileNameWithPath); fileExt != ".torrent" {
-		log.Println("Not a torrent file")
 		return false
 	}
 
 	// Open file now.
 	file, er := os.Open(fileNameWithPath)
 	if er != nil {
-		log.Println(er)
 		return false
 	}
 	defer file.Close()
@@ -63,14 +60,12 @@ func (metaInfo *MetaInfo) ReadTorrentMetaInfoFile(fileNameWithPath string) bool 
 	// Decode bencoded metainfo file.
 	fileMetaData, er := bencode.Decode(file)
 	if er != nil {
-		log.Println(er)
 		return false
 	}
 
 	// fileMetaData is map of maps of... maps. Get top level map.
 	metaInfoMap, ok := fileMetaData.(map[string]interface{})
 	if !ok {
-		log.Println("Failed to get map")
 		return false
 	}
 
@@ -80,7 +75,6 @@ func (metaInfo *MetaInfo) ReadTorrentMetaInfoFile(fileNameWithPath string) bool 
 		switch mapKey {
 		case "info":
 			if er = bencode.Marshal(&bytesBuf, mapVal); er != nil {
-				log.Println(er)
 				return false
 			}
 
@@ -89,17 +83,14 @@ func (metaInfo *MetaInfo) ReadTorrentMetaInfoFile(fileNameWithPath string) bool 
 			metaInfo.InfoHash = string(infoHash.Sum(nil))
 
 			if er = bencode.Unmarshal(&bytesBuf, &metaInfo.Info); er != nil {
-				log.Println(er)
 				return false
 			}
 
 		case "announce-list":
 			if er = bencode.Marshal(&bytesBuf, mapVal); er != nil {
-				log.Println(er)
 				return false
 			}
 			if er = bencode.Unmarshal(&bytesBuf, &metaInfo.AnnounceList); er != nil {
-				log.Println(er)
 				return false
 			}
 
