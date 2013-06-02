@@ -12,12 +12,11 @@ Installation
 ====================
 * Install packages:
 
-    go get code.google.com/p/bencode-go
-    go get github.com/swatkat/gotrntmetainfoparser
+    `go get code.google.com/p/bencode-go`
+
+    `go get github.com/swatkat/gotrntmetainfoparser`
 
 * Import package in your source:
 
-    import (
-        "github.com/swatkat/gotrntmetainfoparser"
-    )
+    `import ("github.com/swatkat/gotrntmetainfoparser")`
 
