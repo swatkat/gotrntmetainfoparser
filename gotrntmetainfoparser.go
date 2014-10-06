@@ -2,7 +2,7 @@ package gotrntmetainfoparser
 
 import (
 	"bytes"
-	"code.google.com/p/bencode-go"
+	"github.com/jackpal/bencode-go"
 	"crypto/sha1"
 	"fmt"
 	"os"
